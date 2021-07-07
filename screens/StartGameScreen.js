@@ -1,27 +1,69 @@
-import React from 'react'
-import { View , Text , Button, TextInput ,StyleSheet} from 'react-native'
+import React,{ useState } from 'react'
+import { View , Text , Button, TouchableWithoutFeedback, Keyboard ,StyleSheet} from 'react-native'
+
 import Card from '../components/Card'
+import Input from '../components/Input';
 
 import Colors from "../constants/Colors";
 
 const StartGameScreen = () => {
+
+    const [userInputNumber,setUserInputNumber] = useState('');
+    const [isConfirmed,setIsConfirmed] = useState(false);
+    const [selectedNumber,setSelectedNumber] = useState();
+
+    const handleUserNumberInput = (userInput)=>{
+        setUserInputNumber(userInput.replace(/[^0-9]/g,''));
+    }
+
+    const handleReset = ()=>{
+        setUserInputNumber('');
+        setIsConfirmed(false)
+    }
+
+    const handleConfirm = () => {
+        const chosenNumber = parseInt(userInputNumber);
+
+        if(chosenNumber === NaN || chosenNumber <=0 || chosenNumber>=99){
+            return;
+        }
+
+        setIsConfirmed(true)
+        setSelectedNumber(chosenNumber)
+        setUserInputNumber('');
+    }
+
+    let confirmedOutput;
+
+    if(isConfirmed){
+        confirmedOutput = <Text>Chosen Number : {selectedNumber}</Text>
+    }
+
     return (
+        <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
         <View style={styles.screen}>  
             <Text style={styles.startNew}>Start a New Game!</Text>
             
-            <Card style={styles.inputContainer}>
+             <Card style={styles.inputContainer}>
                 <Text style={styles.selectNumberTitle}>Select a Number</Text>
-                <TextInput placeholder="Enter input"/>
+
+                <Input style={styles.input} blurOnSubmit autoCapitalize='none' autoCorrect ={false} keyboardType ="number-pad" maxLength={2} onChangeText={handleUserNumberInput} value={userInputNumber} />
+
                 <View style = {styles.buttonContainer}>
+
                     <View style={styles.button}>
-                     <Button title="Reset" color={Colors.secondary} />
+                     <Button title="Reset" color={Colors.secondary} onPress={handleReset} />
                     </View>
+
                     <View style={styles.button}>
-                        <Button title="Confirm" color={Colors.primary} />
+                        <Button title="Confirm" color={Colors.primary} onPress={handleConfirm} />
                     </View>
+
                 </View>
             </Card>
+            {confirmedOutput}
         </View>
+        </TouchableWithoutFeedback>
     )
 }
 
@@ -51,9 +93,13 @@ const styles = StyleSheet.create({
         alignItems : 'center',
         width : '80%'
     },
-        button : {
+    button : {
             width : 100,
-        },
+    },
+    input : {
+        width : 50,
+        textAlign : 'center',
+    }
 })
 
 export default StartGameScreen
