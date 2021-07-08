@@ -94,6 +94,10 @@ const styles = StyleSheet.create({
     },
     startNew : {
         marginVertical : 10,
+        fontFamily : 'Inter-Regular',
+        fontSize : 22,
+        letterSpacing : 4,
+        textTransform :'uppercase',
     },
    inputContainer: {
         width : 300,
@@ -103,6 +107,7 @@ const styles = StyleSheet.create({
     selectNumberTitle : {
         fontSize : 22,
         fontWeight : '600',
+        fontFamily : 'Inter-Regular',
     },  
     buttonContainer : {
         marginVertical : 20,
@@ -120,6 +125,7 @@ const styles = StyleSheet.create({
     },
     start : {
         marginVertical : 20,
+        fontFamily : 'Inter-Bold',
     },
     selectedText : {
         marginVertical : 20,

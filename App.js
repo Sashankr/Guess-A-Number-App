@@ -1,14 +1,22 @@
 import React,{useState} from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import AppLoading from 'expo-app-loading';
+import { useFonts } from 'expo-font';
+
 import Header from './components/Header';
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
 import GameOverScreen from './screens/GameOverScreen';
 
+
+
 export default function App() {
-  const [userNumber,setUserNumber] = useState();
-  const [guessRounds,setGuessRounds] = useState(0);
+
+  const [userNumber,setUserNumber] = useState()
+  const [guessRounds,setGuessRounds] = useState(0)
+
+  const [dataLoaded,setDataLoaded] = useState(false)
 
   const startGameHandler = (selectedNumber) =>{
     setUserNumber(selectedNumber)
@@ -31,17 +39,30 @@ export default function App() {
     content =  <GameOverScreen rounds ={guessRounds} userNumber={userNumber} resetGame={configureNewGameHandler}/>
   }
 
-  return (
+  let [fontsLoaded] = useFonts({
+    'Inter-Black': require('./assets/fonts/Inter-Black.ttf'),
+    'Inter-Bold': require('./assets/fonts/Inter-Bold.ttf'),
+    'Inter-Regular' : require('./assets/fonts/Inter-Regular.ttf'),
+    'Inter-SemiBold' : require('./assets/fonts/Inter-SemiBold.ttf'),
+  })
+  
+  if(!fontsLoaded){
+    return <AppLoading />
+  }
+  else {
+    return  (
     <View style={styles.screen}>
-      <Header heading = {"Guess a number"}/>
+      <Header  heading = {"Guess a number"}/>
       {content}
     </View>
-  );
+    )
+  }
+
 }
 
 const styles = StyleSheet.create({
   screen : {
     flex : 1,
     paddingTop : 25,
-  }
+  },
 });

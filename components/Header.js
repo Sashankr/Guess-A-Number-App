@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
         color : Colors.secondary,
         fontSize : 22,
         letterSpacing : 4,
-        fontWeight : 'bold',
-        textTransform : 'uppercase',
+        fontFamily : 'Inter-Regular',
+        textTransform : "uppercase",
     }
 });
 
