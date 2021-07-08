@@ -1,7 +1,6 @@
 import React,{ useState } from 'react'
 import { 
     View , 
-    Text , 
     Button, 
     TouchableWithoutFeedback,
     Keyboard,
@@ -12,6 +11,8 @@ import {
 import Card from '../components/Card'
 import Input from '../components/Input';
 import NumberContainer from '../components/NumberContainer';
+import BodyText from '../components/BodyText';
+import MainButton from '../components/MainButton';
 
 import Colors from "../constants/Colors";
 
@@ -49,10 +50,10 @@ const StartGameScreen = (props) => {
 
     if(isConfirmed){
         confirmedOutput = <View>
-            <Text style={styles.selectedText}>You selected</Text>
+            <BodyText style={styles.selectedText}>You selected</BodyText>
             <NumberContainer>{selectedNumber}</NumberContainer>
             <View style={styles.start}>
-                <Button title="Start" color={Colors.primary} onPress={()=> props.onStartGame(selectedNumber)} />
+                <MainButton  color={Colors.primary} onPress={()=> props.onStartGame(selectedNumber)} >Start Game</MainButton>
             </View>
         </View>
     }
@@ -60,10 +61,10 @@ const StartGameScreen = (props) => {
     return (
         <TouchableWithoutFeedback onPress={()=>{Keyboard.dismiss()}}>
         <View style={styles.screen}>  
-            <Text style={styles.startNew}>Start a New Game!</Text>
+            <BodyText style={styles.startNew}>Start a New Game!</BodyText>
             
              <Card style={styles.inputContainer}>
-                <Text style={styles.selectNumberTitle}>Select a Number</Text>
+                <BodyText style={styles.selectNumberTitle}>Select a Number</BodyText>
 
                 <Input style={styles.input} blurOnSubmit autoCapitalize='none' autoCorrect ={false} keyboardType ="number-pad" maxLength={2} onChangeText={handleUserNumberInput} value={userInputNumber} />
 
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
         fontFamily : 'Inter-Regular',
         fontSize : 22,
         letterSpacing : 4,
-        textTransform :'uppercase',
+        textTransform :'capitalize',
     },
    inputContainer: {
         width : 300,
@@ -105,9 +106,11 @@ const styles = StyleSheet.create({
         alignItems : 'center',
    },   
     selectNumberTitle : {
-        fontSize : 22,
+        fontSize : 21,
         fontWeight : '600',
         fontFamily : 'Inter-Regular',
+        letterSpacing : 1,
+        textTransform : 'uppercase',
     },  
     buttonContainer : {
         marginVertical : 20,

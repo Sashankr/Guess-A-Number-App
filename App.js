@@ -16,10 +16,9 @@ export default function App() {
   const [userNumber,setUserNumber] = useState()
   const [guessRounds,setGuessRounds] = useState(0)
 
-  const [dataLoaded,setDataLoaded] = useState(false)
-
   const startGameHandler = (selectedNumber) =>{
     setUserNumber(selectedNumber)
+    setGuessRounds(0);
   }
 
   const gameOverHandler = numberOfRounds => {

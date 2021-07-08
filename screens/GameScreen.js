@@ -1,10 +1,11 @@
 import React,{ useState, useRef, useEffect  } from 'react'
 import {View,Text,StyleSheet,Button,Alert} from 'react-native'
 
-
+import BodyText from '../components/BodyText';
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
-import Colors from '../constants/Colors';
+import MainButton from '../components/MainButton';
+import {Ionicons} from '@expo/vector-icons'
 
 const generateRandomBetween = (min, max, exclude) =>{
     min = Math.ceil(min);
@@ -33,6 +34,7 @@ const GameScreen = (props) => {
         }
     },[currentGuess,userChoice,onGameOver])
 
+
     const nextGuessHandler = direction =>{
          if((direction === 'lower' && currentGuess < props.userChoice) || (direction ==='greater' && currentGuess > props.userChoice)){
             Alert.alert('Don\'t lie!', 'You know this is wrong...',[{text:'Sorry!',style :'cancel'}]);
@@ -46,7 +48,7 @@ const GameScreen = (props) => {
          }
         const nextNumber = generateRandomBetween(currentLow.current,currentHigh.current,currentGuess);
         setCurrentGuess(nextNumber);
-        setRounds(curRounds=>curRounds +1);
+        setRounds(curRounds => curRounds +1);
     }
     let success;
     if(currentGuess === props.userChoice){
@@ -55,11 +57,13 @@ const GameScreen = (props) => {
 
     return (
         <View style={styles.screen}>
-            <Text>Opponent's Guess</Text>
+            <BodyText style={styles.guess}>Computer's Guess</BodyText>
             <NumberContainer>{currentGuess}</NumberContainer>
             <Card style={styles.buttonContainer}>
-                <Button title="Lower" color={Colors.secondary} onPress={ nextGuessHandler.bind(this,'lower')}/>
-                <Button title="Greater" color={Colors.secondary} onPress={nextGuessHandler.bind(this,'greater')}/>
+                <MainButton onPress={ nextGuessHandler.bind(this,'lower')}><Ionicons name="md-remove" size={24} color="white" /></MainButton>
+                <MainButton onPress={nextGuessHandler.bind(this,'greater')}>
+                <Ionicons name="md-add" size={24} color="white" />
+                </MainButton>
             </Card>
             {success}
         </View>
@@ -76,8 +80,14 @@ const styles = StyleSheet.create({
         flexDirection : 'row',
         justifyContent : 'space-around',
         marginTop : 20,
-        width : 300,
-        maxWidth : '80%',
+        width : 500,
+        maxWidth : '90%',
+    },
+    guess : {
+        marginVertical : 20,
+        fontSize : 21,
+        fontStyle : 'italic',
+        textTransform : 'uppercase',
     }
 }) 
 

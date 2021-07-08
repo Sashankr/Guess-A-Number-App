@@ -14,7 +14,7 @@ const NumberContainer = (props) => {
 const styles = StyleSheet.create({
     
     selectedText : {
-        color : Colors.secondary, 
+        color : Colors.primary, 
         fontSize : 24,
         borderRadius : 10,
         borderColor : Colors.secondary,
