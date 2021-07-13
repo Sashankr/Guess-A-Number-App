@@ -30,16 +30,35 @@ const GameScreen = (props) => {
     const initialGuess = generateRandomBetween(1,100,props.userChoice)
     const [currentGuess,setCurrentGuess] = useState(initialGuess)
     const [pastGuesses,setPastGuesses] = useState([initialGuess])
-    const [rounds,setRounds] = useState(0);
+
+    const [availableDeviceWidth,setAvailableDeviceWidth] = useState(Dimensions.get('screen').width)
+    const [availableDeviceHeight,setAvailableDeviceHeight] = useState(Dimensions.get('screen').height)
 
     const currentLow = useRef(1)
     const currentHigh = useRef(100)
 
     const {userChoice,onGameOver} = props
     const listContainerStyle = styles.listContainer
+    
     if(Dimensions.get('window').height > 600){
         listContainerStyle = styles.listContainerMobile;
     }
+
+    useEffect(()=>{
+
+        const updateLayout = () =>{
+            setAvailableDeviceWidth(Dimensions.get('screen').width)
+            setAvailableDeviceHeight(Dimensions.get('screen').height)
+        }
+
+        Dimensions.addEventListener('change',updateLayout)
+
+        return ()=>{
+            Dimensions.removeEventListener('change',updateLayout)
+        }
+
+    })
+
 
     useEffect(()=>{
         if(currentGuess === props.userChoice){
@@ -67,6 +86,27 @@ const GameScreen = (props) => {
     let success;
     if(currentGuess === props.userChoice){
         success = <Text>{currentGuess} is the choice you selected!!!</Text>
+    }
+
+    if(availableDeviceHeight<500){
+        return (
+            <View style={styles.screenTilt}>
+                <BodyText style={styles.guessTilt}>Computer's Guess</BodyText>
+            <View style={styles.landscapeControls}>
+                <MainButton onPress={ nextGuessHandler.bind(this,'lower')}><Ionicons name="md-remove" size={24} color="white" /></MainButton>
+                <NumberContainer>{currentGuess}</NumberContainer>
+                <MainButton onPress={nextGuessHandler.bind(this,'greater')}>
+                    <Ionicons name="md-add" size={24} color="white" />
+                </MainButton>
+            </View>
+                <BodyText style={styles.listHeading}>Guess List</BodyText>
+                <View style={styles.listContainer}>
+                <ScrollView>
+                    {pastGuesses.map((guess,index) => renderListItem(guess, pastGuesses.length - index))}
+                </ScrollView>
+                </View>
+            </View>
+        )
     }
 
     return (
@@ -129,6 +169,18 @@ const styles = StyleSheet.create({
         fontSize : 16,
         textTransform : 'uppercase',
         letterSpacing : 3,
+    },
+    landscapeControls : {
+        flexDirection : 'row',
+        justifyContent : 'space-around',
+        alignItems : 'flex-end',
+        width : '100%'
+    },
+    guessTilt : {
+        textAlign : 'center',
+        marginVertical : Dimensions.get('screen').height / 20,
+        fontSize : 18,
+        textTransform : 'uppercase',
     }
 
 
