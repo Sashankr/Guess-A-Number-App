@@ -1,5 +1,5 @@
 import React from 'react'
-import {View,Button,Text,StyleSheet,Image,Dimensions, ScrollView} from 'react-native'
+import {View,Text,StyleSheet,Image,Dimensions, ScrollView,Platform} from 'react-native'
 
 import Colors from '../constants/Colors'
 import BodyText from '../components/BodyText'
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     },
 
     highlight : {
-        color : Colors.primary,
+        color : Platform.OS === 'ios'?Colors.secondary : Colors.primary,
         fontFamily : 'Inter-Bold',
     },
     message :{

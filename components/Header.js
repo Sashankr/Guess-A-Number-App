@@ -1,23 +1,32 @@
 import React from 'react'
-import {View,Text,StyleSheet} from 'react-native'
+import {View,Text,StyleSheet,Platform} from 'react-native'
 import Colors from "../constants/Colors";
 
 const Header = ({heading}) => {
     return (
-        <View style={styles.header}>
+        <View style={{...styles.headerBase,...Platform.select({
+            android : styles.headerAndroid,
+            ios : styles.headerIOS,
+        })}}>
             <Text style ={styles.headerTitle}>{heading}</Text>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    header :{
+    headerBase :{
         width : '100%',
         height : 100,
-        backgroundColor : Colors.primary,
         alignItems : 'center',
         justifyContent : 'center',
     },
+    headerIOS : {
+        backgroundColor : Colors.primary,
+    },
+    headerAndroid : {
+        backgroundColor : '#000',
+    },
+
     headerTitle : {
         color : Colors.secondary,
         fontSize : 22,

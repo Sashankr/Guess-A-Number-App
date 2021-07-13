@@ -40,7 +40,7 @@ const GameScreen = (props) => {
     const {userChoice,onGameOver} = props
     const listContainerStyle = styles.listContainer
     
-    if(Dimensions.get('window').height > 600){
+    if(availableDeviceHeight > 600){
         listContainerStyle = styles.listContainerMobile;
     }
 
@@ -100,7 +100,7 @@ const GameScreen = (props) => {
                 </MainButton>
             </View>
                 <BodyText style={styles.listHeading}>Guess List</BodyText>
-                <View style={styles.listContainer}>
+                <View style={styles.listContainerMobile}>
                 <ScrollView>
                     {pastGuesses.map((guess,index) => renderListItem(guess, pastGuesses.length - index))}
                 </ScrollView>
@@ -131,6 +131,11 @@ const GameScreen = (props) => {
 
 const styles = StyleSheet.create({
     screen : {
+        flex : 1,
+        padding : 10,
+        alignItems  : 'center',
+    },
+    screenTilt :{
         flex : 1,
         padding : 10,
         alignItems  : 'center',
