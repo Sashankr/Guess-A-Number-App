@@ -1,5 +1,5 @@
 import React,{ useState, useRef, useEffect  } from 'react'
-import {View,Text,StyleSheet,ScrollView,Alert} from 'react-native'
+import {View,Text,StyleSheet,ScrollView,Alert,Dimensions} from 'react-native'
 
 import BodyText from '../components/BodyText';
 import NumberContainer from '../components/NumberContainer';
@@ -36,6 +36,10 @@ const GameScreen = (props) => {
     const currentHigh = useRef(100)
 
     const {userChoice,onGameOver} = props
+    const listContainerStyle = styles.listContainer
+    if(Dimensions.get('window').height > 600){
+        listContainerStyle = styles.listContainerMobile;
+    }
 
     useEffect(()=>{
         if(currentGuess === props.userChoice){
@@ -94,7 +98,7 @@ const styles = StyleSheet.create({
     buttonContainer : {
         flexDirection : 'row',
         justifyContent : 'space-around',
-        marginTop : 20,
+        marginTop : Dimensions.get('window').height > 600 ? 20 : 10,
         width : 500,
         maxWidth : '90%',
     },
@@ -115,6 +119,10 @@ const styles = StyleSheet.create({
     },
     listContainer : {
         width : '80%',
+        flex : 1,
+    },
+    listContainerMobile : {
+        width : '60%',
         flex : 1,
     },
     listHeading : {

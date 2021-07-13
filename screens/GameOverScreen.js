@@ -1,5 +1,5 @@
 import React from 'react'
-import {View,Button,Text,StyleSheet,Image} from 'react-native'
+import {View,Button,Text,StyleSheet,Image,Dimensions, ScrollView} from 'react-native'
 
 import Colors from '../constants/Colors'
 import BodyText from '../components/BodyText'
@@ -7,6 +7,7 @@ import MainButton from '../components/MainButton'
 
 const GameOverScreen = (props) => {
     return (
+        <ScrollView>
         <View style={styles.screen}>
             <BodyText style={styles.title}>The game is over</BodyText>
             <View style={styles.imageContainer}>
@@ -16,6 +17,7 @@ const GameOverScreen = (props) => {
             </BodyText>
             <MainButton color={Colors.secondary} onPress={props.resetGame}>New game</MainButton>
         </View>
+        </ScrollView>
     )
 }
 
@@ -29,7 +31,7 @@ const styles = StyleSheet.create({
         fontSize : 22,
         fontFamily : 'Inter-Bold',
         textTransform : 'uppercase',
-        marginVertical : 30,
+        marginVertical : Dimensions.get('window').height / 50,
     },
     rounds : {
         fontSize : 18,
@@ -45,9 +47,9 @@ const styles = StyleSheet.create({
         height : '100%',
         },
     imageContainer : {
-        width : 300,
-        height : 300,
-        borderRadius : 1000,
+        width : Dimensions.get('window').width * 0.5,
+        height : Dimensions.get('window').width * 0.5,
+        borderRadius : Dimensions.get('window').width * 0.5 / 2,
         borderWidth : 4,
         borderColor : Colors.secondary,
         overflow : 'hidden',
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
         fontFamily : 'Inter-Bold',
     },
     message :{
-        marginVertical : 20,
+        marginVertical : Dimensions.get('window').height / 20,
         fontSize : 18,
         textAlign : 'center'
     }
